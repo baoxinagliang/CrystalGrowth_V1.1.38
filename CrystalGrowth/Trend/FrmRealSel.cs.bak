@@ -1,0 +1,269 @@
+﻿using CrystalGrowth.CrystalCtl;
+using CrystalGrowth.SOP;
+using CrystalGrowth.Unities;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace CrystalGrowth.Trend
+{
+    internal partial class FrmRealSel : Form
+    {
+        int SelVarNum = 0;
+        readonly DateT dateT;
+        public FrmRealSel()
+        {
+            InitializeComponent();
+            DataGridView1.Rows.Add(5);
+            int Lenght = TData.LimitValue.Count;
+            DataGridView2.Rows.Add(Lenght);
+            string[] strArray = TData.LimitValue.Keys.ToArray();
+            for (int i = 0; i < Lenght; i++)
+            {
+                DataGridView2.Rows[i].Cells[0].Value = strArray[i];
+            }
+            dateT = new DateT();
+            LabTIme.Text = dateT.Value.ToString("yyyy-MM-dd HH:mm:ss");
+            LoadVarFile();
+        }
+        private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (DataGridView1.CurrentCell.Value != null && (e.ColumnIndex == 2 || e.ColumnIndex == 3))
+            {
+                string LastObj = DataGridView1.CurrentCell.Value.ToString();
+                SmallKey sk = new SmallKey();
+                sk.ImportData(DataGridView1.CurrentCell, new Point(768, 200), 1);
+                sk.ShowDialog();
+                if (sk.DialogResult == DialogResult.OK)
+                {
+                    TData.WriteLimitValue(DataGridView1.CurrentCell.Value.ToString(), e.RowIndex, e.ColumnIndex);
+                }
+                LabInfo.Text = LastObj != DataGridView1.CurrentCell.Value.ToString() ? "界限值已更改，请重新查询显示!" : "";
+            }
+        }
+        private void DataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            SelVarNum = e.RowIndex;
+            DataGridView2[0, SelVarNum].Style.SelectionBackColor = Color.Blue;
+            DataGridView2[0, SelVarNum].Style.SelectionForeColor = Color.White;
+            BtnSelect.Enabled = true;
+        }
+        private void BtnSelect_Click(object sender, EventArgs e)
+        {
+            bool ExistFlag = false;
+            for (int i = 0; i < 5; i++)
+            {
+                if (DataGridView1.Rows[i].Cells[1].Value.ToString() == DataGridView2.Rows[SelVarNum].Cells[0].Value.ToString())
+                {
+                    TData.SelValue[i].Index = 0;
+                    DataGridView1.Rows[i].Cells[1].Value = "";
+                    DataGridView1.Rows[i].Cells[2].Value = "";
+                    DataGridView1.Rows[i].Cells[3].Value = "";
+                    ExistFlag = true;
+                }
+            }
+            if (ExistFlag == false)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    if (DataGridView1.Rows[i].Cells[1].Value.ToString() == "")
+                    {
+                        DataGridView1.Rows[i].Cells[1].Value = DataGridView2.Rows[SelVarNum].Cells[0].Value;
+                        TData.SelValue[i].Name = DataGridView1.Rows[i].Cells[1].Value.ToString();
+                        TData.SelValue[i].Value = "";
+                        TData.SelValue[i].Index = Convert.ToInt32(TData.Paras[DataGridView2.Rows[SelVarNum].Cells[0].Value.ToString()].Num);
+                        TData.SelValue[i].Min = TData.LimitValue[TData.SelValue[i].Name].Min;
+                        TData.SelValue[i].Max = TData.LimitValue[TData.SelValue[i].Name].Max;
+                        DataGridView1.Rows[i].Cells[2].Value = TData.SelValue[i].Min;
+                        DataGridView1.Rows[i].Cells[3].Value = TData.SelValue[i].Max;
+                        return;
+                    }
+                }
+            }
+        }
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            if (DouClick.ThreeSec(ref BtnSave))
+            {
+                TData.SaveVarFile();
+                TData.SaveLimitValue();
+            }
+        }
+        private void BtnClear_Click(object sender, EventArgs e)
+        {
+            if (DouClick.ThreeSec(ref BtnClear))
+            {
+                FrmTrend.Single.chart1.Series.Clear();
+                FrmTrend.Single.ChartAddSeries(FrmTrend.Single.chart1);
+                for (int i = 0; i < 5; i++)
+                {
+                    DataGridView1.Rows[i].Cells[1].Value = "";
+                    DataGridView1.Rows[i].Cells[2].Value = "";
+                    DataGridView1.Rows[i].Cells[3].Value = "";
+                    TData.SelValue[i].Index = 0;
+                }
+            }
+        }
+        private void LoadVarFile()
+        {
+            string[] Lines = File.ReadAllLines(FileHelper.HisSelPath, Encoding.UTF8);
+            int Length = Lines.Length;
+            if (Length > 0)
+            {
+                string[] TempVar = Lines[0].Split(new char[] { ' ' });
+                for (int i = 0; i < 5; i++)
+                {
+                    TData.SelValue[i].Index = Convert.ToInt32(TempVar[i]);
+                    if (TData.SelValue[i].Index > 0)
+                    {
+                        DataGridView1.Rows[i].Cells[1].Value = FrmVarTable.VarStr[TData.SelValue[i].Index];
+                        TData.SelValue[i].Name = DataGridView1.Rows[i].Cells[1].Value.ToString();
+                        TData.SelValue[i].Value = "";
+                        TData.SelValue[i].Min = TData.LimitValue[TData.SelValue[i].Name].Min;
+                        TData.SelValue[i].Max = TData.LimitValue[TData.SelValue[i].Name].Max;
+                        DataGridView1.Rows[i].Cells[2].Value = TData.SelValue[i].Min;
+                        DataGridView1.Rows[i].Cells[3].Value = TData.SelValue[i].Max;
+                    }
+                    else
+                    {
+                        TData.SelValue[i].Index = 0;
+                        DataGridView1.Rows[i].Cells[1].Value = "";
+                        DataGridView1.Rows[i].Cells[2].Value = "";
+                        DataGridView1.Rows[i].Cells[3].Value = "";
+                    }
+                }
+            }
+        }
+        private void BtnQuit_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+        private void CBData_DropDown(object sender, EventArgs e)
+        {
+            DirectoryInfo Dir = new DirectoryInfo("D:\\LICCS_DB");
+            FileInfo[] Files = Dir.GetFiles("*.db3", SearchOption.TopDirectoryOnly);
+            int Length = Files.Length;
+            CBData.Items.Clear();
+            if (Length > 0)
+            {
+                for (int i = 0; i < Length; i++)
+                {
+                    CBData.Items.Add(Path.GetFileNameWithoutExtension(Files[i].FullName));
+                    if (CBData.Items[i] == CBData.SelectedItem)
+                    {
+                        CBData.SelectedItem = CBData.Items[i];
+                    }
+                }
+            }
+        }
+        private void BtnQuery_Click(object sender, EventArgs e)
+        {
+            if (DouClick.ThreeSec(ref BtnQuery))
+            {
+                if (CBData.SelectedItem == null)
+                {
+                    LabInfo.Text = "请选查询数据文件！";
+                    return;
+                }
+                string DataSource = string.Format("D:\\LICCS_DB\\{0}.db3", CBData.SelectedItem.ToString());
+                //数据库是否存在
+                if (File.Exists(DataSource))
+                {
+                    //连接数据库
+                    string para1 = TData.SelValue[0].Index == 0 ? "" : string.Concat(TData.Paras[TData.SelValue[0].Name].Name, ",");
+                    string para2 = TData.SelValue[1].Index == 0 ? "" : string.Concat(TData.Paras[TData.SelValue[1].Name].Name, ",");
+                    string para3 = TData.SelValue[2].Index == 0 ? "" : string.Concat(TData.Paras[TData.SelValue[2].Name].Name, ",");
+                    string para4 = TData.SelValue[3].Index == 0 ? "" : string.Concat(TData.Paras[TData.SelValue[3].Name].Name, ",");
+                    string para5 = TData.SelValue[4].Index == 0 ? "" : string.Concat(TData.Paras[TData.SelValue[4].Name].Name, ",");
+                    string para = string.Concat(para1, para2, para3, para4, para5).TrimEnd(',');
+                    if (para == "")
+                    {
+                        LabInfo.Text = "查寻参数不存在！";
+                        return;
+                    }
+                    FrmTrend.Single.chart1.Series.Clear();//清除所有数据集 
+                    FrmTrend.Single.ChartAddSeries(FrmTrend.Single.chart1);
+                    string strStart = LabTIme.Text;
+                    DateTime objStart = Convert.ToDateTime(strStart);
+                    DateTime objEnd = objStart.AddMinutes(-FrmChangeTime.SpanHistoryTime);
+                    string strEnd = objEnd.ToString("yyyy-MM-dd HH:mm:ss");
+                    string CmdStr = $"SELECT DATE_TIME,{para} FROM PROCESS_DATA WHERE DATE_TIME BETWEEN DATETIME('{strEnd}') AND DATETIME('{strStart}')";
+                    using (DataTable dt = SqliteHelper.GetDataTable(string.Format("Data Source={0};Pooling=true;FailIfMissing=false", DataSource), CmdStr))
+                    {
+                        List<double> doubX = new List<double>(), doubY1 = new List<double>(), doubY2 = new List<double>(), doubY3 = new List<double>(), doubY4 = new List<double>(), doubY5 = new List<double>();
+                        if (dt != null && dt.Rows.Count >= 2)
+                        {
+                            LabInfo.Text = "数据加载中,请等待完成........";
+                            LabInfo.Refresh();
+                            object tempData;
+                            foreach (DataRow dataRow in dt.Rows)
+                            {
+                                doubX.Add(Convert.ToDateTime(dataRow[0]).ToOADate());
+                                if (para1 != "")
+                                {
+                                    tempData = dataRow[$"{para1.TrimEnd(',')}"];
+                                    doubY1.Add(DataCovert.Juage(tempData) ? DataCovert.NumVar(tempData, TData.SelValue[0].Min, TData.SelValue[0].Max) : 0);
+                                }
+                                if (para2 != "")
+                                {
+                                    tempData = dataRow[$"{para2.TrimEnd(',')}"];
+                                    doubY2.Add(DataCovert.Juage(tempData) ? DataCovert.NumVar(tempData, TData.SelValue[1].Min, TData.SelValue[1].Max) : 0);
+                                }
+                                if (para3 != "")
+                                {
+                                    tempData = dataRow[$"{para3.TrimEnd(',')}"];
+                                    doubY3.Add(DataCovert.Juage(tempData) ? DataCovert.NumVar(tempData, TData.SelValue[2].Min, TData.SelValue[2].Max) : 0);
+                                }
+                                if (para4 != "")
+                                {
+                                    tempData = dataRow[$"{para4.TrimEnd(',')}"];
+                                    doubY4.Add(DataCovert.Juage(tempData) ? DataCovert.NumVar(tempData, TData.SelValue[3].Min, TData.SelValue[3].Max) : 0);
+                                }
+                                if (para5 != "")
+                                {
+                                    tempData = dataRow[$"{para5.TrimEnd(',')}"];
+                                    doubY5.Add(DataCovert.Juage(tempData) ? DataCovert.NumVar(tempData, TData.SelValue[4].Min, TData.SelValue[4].Max) : 0);
+                                }
+                            }
+                            FrmTrend.Single.TimeChange(FrmTrend.Single.chart1, doubX[doubX.Count - 1], doubX[0]);
+                            if (para1 != "") { FrmTrend.Single.chart1.Series[0].Points.DataBindXY(doubX, doubY1); }
+                            if (para2 != "") { FrmTrend.Single.chart1.Series[1].Points.DataBindXY(doubX, doubY2); }
+                            if (para3 != "") { FrmTrend.Single.chart1.Series[2].Points.DataBindXY(doubX, doubY3); }
+                            if (para4 != "") { FrmTrend.Single.chart1.Series[3].Points.DataBindXY(doubX, doubY4); }
+                            if (para5 != "") { FrmTrend.Single.chart1.Series[4].Points.DataBindXY(doubX, doubY5); }
+                            LabInfo.Text = "";
+                        }
+                        else
+                        {
+                            LabInfo.Text = "查询数据不存在！";
+                        }
+                    }
+                }
+                else
+                {
+                    LabInfo.Text = "数据文件不存在！";
+                }
+            }
+        }
+        private void BtnAdd_Click(object sender, EventArgs e)
+        {
+            if (CbbSelect.SelectedItem != null)
+            {
+                LabTIme.Text = dateT.Add(CbbSelect.SelectedItem.ToString());
+            }
+        }
+
+        private void BtnRed_Click(object sender, EventArgs e)
+        {
+            if (CbbSelect.SelectedItem != null)
+            {
+                LabTIme.Text = dateT.Reduce(CbbSelect.SelectedItem.ToString());
+            }
+        }
+    }
+}

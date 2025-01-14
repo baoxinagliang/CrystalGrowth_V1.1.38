@@ -1,0 +1,1932 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{33DB1627-476A-45A2-BB98-A3F02175EEE4}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CrystalGrowth</RootNamespace>
+    <AssemblyName>CrystalGrowth</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>CrystalGrowth.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>false</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>CrystalGrowth.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CamLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\CamLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI, Version=2.5.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="S7.Net, Version=0.8.0.0, Culture=neutral, PublicKeyToken=d5812d469e84c693, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\S7.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.109.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AutoSel\FrmAutoCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AutoSel\FrmAutoCheck.Designer.cs">
+      <DependentUpon>FrmAutoCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AutoSel\FrmAutoID.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AutoSel\FrmAutoID.Designer.cs">
+      <DependentUpon>FrmAutoID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AutoSel\FrmAutoSel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AutoSel\FrmAutoSel.Designer.cs">
+      <DependentUpon>FrmAutoSel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmBodyDia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmBodyDia.Designer.cs">
+      <DependentUpon>FrmBodyDia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmCalib.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmCalib.Designer.cs">
+      <DependentUpon>FrmCalib.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmCL_Speed.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmCL_Speed.Designer.cs">
+      <DependentUpon>FrmCL_Speed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmCrownDia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmCrownDia.Designer.cs">
+      <DependentUpon>FrmCrownDia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmCrucTrv.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmCrucTrv.Designer.cs">
+      <DependentUpon>FrmCrucTrv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmCrucTrvLim.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmCrucTrvLim.Designer.cs">
+      <DependentUpon>FrmCrucTrvLim.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmCR_Speed.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmCR_Speed.Designer.cs">
+      <DependentUpon>FrmCR_Speed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmDiaCalib.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmDiaCalib.Designer.cs">
+      <DependentUpon>FrmDiaCalib.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmFurnaceNum.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmFurnaceNum.Designer.cs">
+      <DependentUpon>FrmFurnaceNum.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmHtrTempClib.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmHtrTempClib.Designer.cs">
+      <DependentUpon>FrmHtrTempClib.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmIsoAtm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmIsoAtm.Designer.cs">
+      <DependentUpon>FrmIsoAtm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmMeltGapClib.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmMeltGapClib.Designer.cs">
+      <DependentUpon>FrmMeltGapClib.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmMultiSegment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmMultiSegment.Designer.cs">
+      <DependentUpon>FrmMultiSegment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmNeckDia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmNeckDia.Designer.cs">
+      <DependentUpon>FrmNeckDia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmPulloutWeig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmPulloutWeig.Designer.cs">
+      <DependentUpon>FrmPulloutWeig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmSeedTrv.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmSeedTrv.Designer.cs">
+      <DependentUpon>FrmSeedTrv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmSeedTrvLim.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmSeedTrvLim.Designer.cs">
+      <DependentUpon>FrmSeedTrvLim.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmShieldTrv.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmShieldTrv.Designer.cs">
+      <DependentUpon>FrmShieldTrv.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmShieldTrvLim.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmShieldTrvLim.Designer.cs">
+      <DependentUpon>FrmShieldTrvLim.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmSL_Speed.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmSL_Speed.Designer.cs">
+      <DependentUpon>FrmSL_Speed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmSR_Speed.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmSR_Speed.Designer.cs">
+      <DependentUpon>FrmSR_Speed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmTotalGas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmTotalGas.Designer.cs">
+      <DependentUpon>FrmTotalGas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmTotalLen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmTotalLen.Designer.cs">
+      <DependentUpon>FrmTotalLen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmTotalPower.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmTotalPower.Designer.cs">
+      <DependentUpon>FrmTotalPower.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmWeightCalib.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmWeightCalib.Designer.cs">
+      <DependentUpon>FrmWeightCalib.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmWeightGap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmWeightGap.Designer.cs">
+      <DependentUpon>FrmWeightGap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmWeightTune.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmWeightTune.Designer.cs">
+      <DependentUpon>FrmWeightTune.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmBodyArea.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmBodyArea.Designer.cs">
+      <DependentUpon>FrmBodyArea.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmBrightArea.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmBrightArea.Designer.cs">
+      <DependentUpon>FrmBrightArea.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmCam1Adjust.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmCam1Adjust.Designer.cs">
+      <DependentUpon>FrmCam1Adjust.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmCam1SavePic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmCam1SavePic.Designer.cs">
+      <DependentUpon>FrmCam1SavePic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmCam2Adjust.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmCam2Adjust.Designer.cs">
+      <DependentUpon>FrmCam2Adjust.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmCCD.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmCCD.Designer.cs">
+      <DependentUpon>FrmCCD.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmBodyTemp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmBodyTemp.Designer.cs">
+      <DependentUpon>FrmBodyTemp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmCrownArea.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmCrownArea.Designer.cs">
+      <DependentUpon>FrmCrownArea.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmCrystalShake.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmCrystalShake.Designer.cs">
+      <DependentUpon>FrmCrystalShake.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmCutLineCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmCutLineCheck.Designer.cs">
+      <DependentUpon>FrmCutLineCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmHArea.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmHArea.Designer.cs">
+      <DependentUpon>FrmHArea.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmImage.Designer.cs">
+      <DependentUpon>FrmImage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmMeltCheckArea.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmMeltCheckArea.Designer.cs">
+      <DependentUpon>FrmMeltCheckArea.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmMeltGapArea.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmMeltGapArea.Designer.cs">
+      <DependentUpon>FrmMeltGapArea.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmMeltGapLArea.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmMeltGapLArea.Designer.cs">
+      <DependentUpon>FrmMeltGapLArea.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmNeckArea.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmNeckArea.Designer.cs">
+      <DependentUpon>FrmNeckArea.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmPicSave.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmPicSave.Designer.cs">
+      <DependentUpon>FrmPicSave.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmReferenceLine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmReferenceLine.Designer.cs">
+      <DependentUpon>FrmReferenceLine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmShieldMeasure.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\CCD\FrmShieldMeasure.Designer.cs">
+      <DependentUpon>FrmShieldMeasure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmAuxFunc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmAuxFunc.Designer.cs">
+      <DependentUpon>FrmAuxFunc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmCrownT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmCrownT.Designer.cs">
+      <DependentUpon>FrmCrownT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmCruLockGraphUpDown.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmCruLockGraphUpDown.Designer.cs">
+      <DependentUpon>FrmCruLockGraphUpDown.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmDiaByWeight.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmDiaByWeight.Designer.cs">
+      <DependentUpon>FrmDiaByWeight.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmFTLockGraphRot.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmFTLockGraphRot.Designer.cs">
+      <DependentUpon>FrmFTLockGraphRot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmFTLockGraphUpDown.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmFTLockGraphUpDown.Designer.cs">
+      <DependentUpon>FrmFTLockGraphUpDown.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmFTPCAction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmFTPCAction.Designer.cs">
+      <DependentUpon>FrmFTPCAction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmHotEdite.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmHotEdite.Designer.cs">
+      <DependentUpon>FrmHotEdite.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmHotHistory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmHotHistory.Designer.cs">
+      <DependentUpon>FrmHotHistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmHtrLockGraph.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmHtrLockGraph.Designer.cs">
+      <DependentUpon>FrmHtrLockGraph.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmLockloopLockGraph.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmLockloopLockGraph.Designer.cs">
+      <DependentUpon>FrmLockloopLockGraph.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmManager.Designer.cs">
+      <DependentUpon>FrmManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmCameraPos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmCameraPos.Designer.cs">
+      <DependentUpon>FrmCameraPos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmCameraTemp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\Calibration\FrmCameraTemp.Designer.cs">
+      <DependentUpon>FrmCameraTemp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmCalculator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmCalculator.Designer.cs">
+      <DependentUpon>FrmCalculator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmCrucCalc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmCrucCalc.Designer.cs">
+      <DependentUpon>FrmCrucCalc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmCrystalCalc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmCrystalCalc.Designer.cs">
+      <DependentUpon>FrmCrystalCalc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmCtlSel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmCtlSel.Designer.cs">
+      <DependentUpon>FrmCtlSel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmLogin.Designer.cs">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmPCLockGraphRot.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmPCLockGraphRot.Designer.cs">
+      <DependentUpon>FrmPCLockGraphRot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmPCLockGraphUpDown.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmPCLockGraphUpDown.Designer.cs">
+      <DependentUpon>FrmPCLockGraphUpDown.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmShieldLockGraphUpDown.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmShieldLockGraphUpDown.Designer.cs">
+      <DependentUpon>FrmShieldLockGraphUpDown.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmHotZone.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmHotZone.Designer.cs">
+      <DependentUpon>FrmHotZone.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmTimer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmTimer.Designer.cs">
+      <DependentUpon>FrmTimer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmValveLockGraphOpenClose.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmValveLockGraphOpenClose.Designer.cs">
+      <DependentUpon>FrmValveLockGraphOpenClose.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\FrmXTALLockGraph.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\FrmXTALLockGraph.Designer.cs">
+      <DependentUpon>FrmXTALLockGraph.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\License\ComputerInfo.cs" />
+    <Compile Include="AuxFunction\License\EncryptionHelper.cs" />
+    <Compile Include="AuxFunction\License\FrmLicense.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\License\FrmLicense.Designer.cs">
+      <DependentUpon>FrmLicense.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\License\License.cs" />
+    <Compile Include="AuxFunction\MainTain\FrmLimitSW.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\MainTain\FrmLimitSW.Designer.cs">
+      <DependentUpon>FrmLimitSW.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\MainTain\FrmMaintain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\MainTain\FrmMaintain.Designer.cs">
+      <DependentUpon>FrmMaintain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\MainTain\FrmMaintainLock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\MainTain\FrmMaintainLock.Designer.cs">
+      <DependentUpon>FrmMaintainLock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\MainTain\FrmPerFac.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\MainTain\FrmPerFac.Designer.cs">
+      <DependentUpon>FrmPerFac.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AuxFunction\MainTain\FrmTempSW.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AuxFunction\MainTain\FrmTempSW.Designer.cs">
+      <DependentUpon>FrmTempSW.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmAddWeight.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmAddWeight.Designer.cs">
+      <DependentUpon>FrmAddWeight.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmBakeout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmBakeout.Designer.cs">
+      <DependentUpon>FrmBakeout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmBody.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmBody.Designer.cs">
+      <DependentUpon>FrmBody.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCharging.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCharging.Designer.cs">
+      <DependentUpon>FrmCharging.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCLSL.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCLSL.Designer.cs">
+      <DependentUpon>FrmCLSL.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCoverOut.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCoverOut.Designer.cs">
+      <DependentUpon>FrmCoverOut.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCoverRotIn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCoverRotIn.Designer.cs">
+      <DependentUpon>FrmCoverRotIn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCoverRotOut.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCoverRotOut.Designer.cs">
+      <DependentUpon>FrmCoverRotOut.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCrown.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCrown.Designer.cs">
+      <DependentUpon>FrmCrown.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCrownTrack.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCrownTrack.Designer.cs">
+      <DependentUpon>FrmCrownTrack.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCrucLift.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCrucLift.Designer.cs">
+      <DependentUpon>FrmCrucLift.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCrucLiftActived.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCrucLiftActived.Designer.cs">
+      <DependentUpon>FrmCrucLiftActived.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCrucPos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCrucPos.Designer.cs">
+      <DependentUpon>FrmCrucPos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCrucRot.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCrucRot.Designer.cs">
+      <DependentUpon>FrmCrucRot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCrucRotAcc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCrucRotAcc.Designer.cs">
+      <DependentUpon>FrmCrucRotAcc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCrysCold.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCrysCold.Designer.cs">
+      <DependentUpon>FrmCrysCold.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCrysCold1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCrysCold1.Designer.cs">
+      <DependentUpon>FrmCrysCold1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCrysCold2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmCrysCold2.Designer.cs">
+      <DependentUpon>FrmCrysCold2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmDiaCtl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmDiaCtl.Designer.cs">
+      <DependentUpon>FrmDiaCtl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmDiaRateCtl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmDiaRateCtl.Designer.cs">
+      <DependentUpon>FrmDiaRateCtl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmFastTail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmFastTail.Designer.cs">
+      <DependentUpon>FrmFastTail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmFeedConfirm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmFeedConfirm.Designer.cs">
+      <DependentUpon>FrmFeedConfirm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmFeedManual.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmFeedManual.Designer.cs">
+      <DependentUpon>FrmFeedManual.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmFinishedTail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmFinishedTail.Designer.cs">
+      <DependentUpon>FrmFinishedTail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmGrowCtl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmGrowCtl.Designer.cs">
+      <DependentUpon>FrmGrowCtl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmGrowCtlTemp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmGrowCtlTemp.Designer.cs">
+      <DependentUpon>FrmGrowCtlTemp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmHtrTemp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmHtrTemp.Designer.cs">
+      <DependentUpon>FrmHtrTemp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmHUIConfirmPopUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmHUIConfirmPopUp.Designer.cs">
+      <DependentUpon>FrmHUIConfirmPopUp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmIsolation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmIsolation.Designer.cs">
+      <DependentUpon>FrmIsolation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmLeakBack.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmLeakBack.Designer.cs">
+      <DependentUpon>FrmLeakBack.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmLevel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmLevel.Designer.cs">
+      <DependentUpon>FrmLevel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmLostSmallWeightPopUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmLostSmallWeightPopUp.Designer.cs">
+      <DependentUpon>FrmLostSmallWeightPopUp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmLostWeightPopUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmLostWeightPopUp.Designer.cs">
+      <DependentUpon>FrmLostWeightPopUp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmMain.Designer.cs">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmManual.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmManual.Designer.cs">
+      <DependentUpon>FrmManual.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmManualNeck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmManualNeck.Designer.cs">
+      <DependentUpon>FrmManualNeck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmMeltData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmMeltData.Designer.cs">
+      <DependentUpon>FrmMeltData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmMeltGap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmMeltGap.Designer.cs">
+      <DependentUpon>FrmMeltGap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmMeltGapPopUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmMeltGapPopUp.Designer.cs">
+      <DependentUpon>FrmMeltGapPopUp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmMeltGapSafe.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmMeltGapSafe.Designer.cs">
+      <DependentUpon>FrmMeltGapSafe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmMelting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmMelting.Designer.cs">
+      <DependentUpon>FrmMelting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmMeltTemp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmMeltTemp.Designer.cs">
+      <DependentUpon>FrmMeltTemp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmMsgBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmMsgBox.Designer.cs">
+      <DependentUpon>FrmMsgBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmNeck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmNeck.Designer.cs">
+      <DependentUpon>FrmNeck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmPopUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmPopUp.Designer.cs">
+      <DependentUpon>FrmPopUp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmPowerCtl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmPowerCtl.Designer.cs">
+      <DependentUpon>FrmPowerCtl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmPowerRate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmPowerRate.Designer.cs">
+      <DependentUpon>FrmPowerRate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmPressCtl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmPressCtl.Designer.cs">
+      <DependentUpon>FrmPressCtl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmPressurization.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmPressurization.Designer.cs">
+      <DependentUpon>FrmPressurization.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmPumpDown.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmPumpDown.Designer.cs">
+      <DependentUpon>FrmPumpDown.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmPurge.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmPurge.Designer.cs">
+      <DependentUpon>FrmPurge.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmSafeProtect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmSafeProtect.Designer.cs">
+      <DependentUpon>FrmSafeProtect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmSaveProtected.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmSaveProtected.Designer.cs">
+      <DependentUpon>FrmSaveProtected.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmSeedLift.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmSeedLift.Designer.cs">
+      <DependentUpon>FrmSeedLift.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmSeedPullIn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmSeedPullIn.Designer.cs">
+      <DependentUpon>FrmSeedPullIn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmSeedRot.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmSeedRot.Designer.cs">
+      <DependentUpon>FrmSeedRot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmSeedRotAcc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmSeedRotAcc.Designer.cs">
+      <DependentUpon>FrmSeedRotAcc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmShieldPos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmShieldPos.Designer.cs">
+      <DependentUpon>FrmShieldPos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmShoulder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmShoulder.Designer.cs">
+      <DependentUpon>FrmShoulder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmShutDown.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmShutDown.Designer.cs">
+      <DependentUpon>FrmShutDown.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmStabilizationDip.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmStabilizationDip.Designer.cs">
+      <DependentUpon>FrmStabilizationDip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmTail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmTail.Designer.cs">
+      <DependentUpon>FrmTail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmTempRate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmTempRate.Designer.cs">
+      <DependentUpon>FrmTempRate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmTubeIn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmTubeIn.Designer.cs">
+      <DependentUpon>FrmTubeIn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmTubeOut.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmTubeOut.Designer.cs">
+      <DependentUpon>FrmTubeOut.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmVarTable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\FrmVarTable.Designer.cs">
+      <DependentUpon>FrmVarTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrystalCtl\KeyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrystalCtl\KeyForm.Designer.cs">
+      <DependentUpon>KeyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab24.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab24.Designer.cs">
+      <DependentUpon>ProcStab24.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Trend\FrmRealSel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trend\FrmRealSel.Designer.cs">
+      <DependentUpon>FrmRealSel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Unities\AbsLiquidLocation.cs" />
+    <Compile Include="Unities\Alarm.cs" />
+    <Compile Include="Unities\Calibrate.cs" />
+    <Compile Include="Unities\CCDDataLimit.cs" />
+    <Compile Include="Unities\DateT.cs" />
+    <Compile Include="Unities\DouClick.cs" />
+    <Compile Include="Unities\DualCam.cs" />
+    <Compile Include="Unities\Feed.cs" />
+    <Compile Include="Unities\HotEquipmentParts.cs" />
+    <Compile Include="Unities\IgAlgo2.cs" />
+    <Compile Include="Unities\MGpBasic.cs" />
+    <Compile Include="Unities\MGpMove2.cs" />
+    <Compile Include="Unities\Parameter.cs" />
+    <Compile Include="Unities\ParasCam1.cs" />
+    <Compile Include="Unities\ParasCam2.cs" />
+    <Compile Include="Unities\CLSLParas.cs" />
+    <Compile Include="Unities\CrucPara.cs" />
+    <Compile Include="Unities\FileHelper.cs" />
+    <Compile Include="Unities\Level.cs" />
+    <Compile Include="Unities\MGpMove1.cs" />
+    <Compile Include="Unities\IgAlgo1.cs" />
+    <Compile Include="Unities\Mode.cs" />
+    <Compile Include="Unities\CrystalCalc.cs" />
+    <Compile Include="Unities\DataCovert.cs" />
+    <Compile Include="Unities\Log.cs" />
+    <Compile Include="Unities\FrmSwitch.cs" />
+    <Compile Include="Unities\ExternDll.cs" />
+    <Compile Include="Unities\ParasBasic.cs" />
+    <Compile Include="Unities\Pic.cs" />
+    <Compile Include="Unities\PLC.cs" />
+    <Compile Include="Unities\ProcState.cs" />
+    <Compile Include="Unities\Record.cs" />
+    <Compile Include="Unities\Sop.cs" />
+    <Compile Include="Unities\SopData.cs" />
+    <Compile Include="Unities\SopFrm.cs" />
+    <Compile Include="Unities\SqliteHelper.cs" />
+    <Compile Include="Unities\IdNum.cs" />
+    <Compile Include="Unities\Paras1.cs" />
+    <Compile Include="Unities\Paras2.cs" />
+    <Compile Include="GasVacuum\FrmGasVacuum.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GasVacuum\FrmGasVacuum.Designer.cs">
+      <DependentUpon>FrmGasVacuum.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GasVacuum\FrmVacumm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GasVacuum\FrmVacumm.Designer.cs">
+      <DependentUpon>FrmVacumm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GrowRecord\FrmColorSel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GrowRecord\FrmColorSel.Designer.cs">
+      <DependentUpon>FrmColorSel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GrowRecord\FrmGrowRecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GrowRecord\FrmGrowRecord.Designer.cs">
+      <DependentUpon>FrmGrowRecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GrowRecord\FrmHistTrend.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GrowRecord\FrmHistTrend.Designer.cs">
+      <DependentUpon>FrmHistTrend.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GrowRecord\FrmReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GrowRecord\FrmReport.Designer.cs">
+      <DependentUpon>FrmReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SOP\FrmSaveFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\FrmSaveFile.designer.cs">
+      <DependentUpon>FrmSaveFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\FrmSelFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\FrmSelFile.designer.cs">
+      <DependentUpon>FrmSelFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\FullKey.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\FullKey.Designer.cs">
+      <DependentUpon>FullKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcSel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcSel.Designer.cs">
+      <DependentUpon>ProcSel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab1.designer.cs">
+      <DependentUpon>ProcStab1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab10.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab10.designer.cs">
+      <DependentUpon>ProcStab10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab11.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab11.designer.cs">
+      <DependentUpon>ProcStab11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab12.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab12.designer.cs">
+      <DependentUpon>ProcStab12.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab13.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab13.designer.cs">
+      <DependentUpon>ProcStab13.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab14.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab14.designer.cs">
+      <DependentUpon>ProcStab14.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab15.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab15.designer.cs">
+      <DependentUpon>ProcStab15.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab16.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab16.designer.cs">
+      <DependentUpon>ProcStab16.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab17.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab17.designer.cs">
+      <DependentUpon>ProcStab17.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab18.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab18.designer.cs">
+      <DependentUpon>ProcStab18.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab19.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab19.designer.cs">
+      <DependentUpon>ProcStab19.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab2.designer.cs">
+      <DependentUpon>ProcStab2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab20.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab20.designer.cs">
+      <DependentUpon>ProcStab20.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab21.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab21.designer.cs">
+      <DependentUpon>ProcStab21.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab22.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab22.designer.cs">
+      <DependentUpon>ProcStab22.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab23.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab23.designer.cs">
+      <DependentUpon>ProcStab23.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab3.designer.cs">
+      <DependentUpon>ProcStab3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab4.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab4.designer.cs">
+      <DependentUpon>ProcStab4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab5.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab5.designer.cs">
+      <DependentUpon>ProcStab5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab6.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab6.designer.cs">
+      <DependentUpon>ProcStab6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab7.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab7.designer.cs">
+      <DependentUpon>ProcStab7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab8.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab8.designer.cs">
+      <DependentUpon>ProcStab8.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\ProcStab9.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\ProcStab9.designer.cs">
+      <DependentUpon>ProcStab9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SOP\SmallKey.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SOP\SmallKey.Designer.cs">
+      <DependentUpon>SmallKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Trend\FrmChangeTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trend\FrmChangeTime.Designer.cs">
+      <DependentUpon>FrmChangeTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Trend\FrmTrend.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trend\FrmTrend.Designer.cs">
+      <DependentUpon>FrmTrend.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Trend\FrmVarSel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trend\FrmVarSel.Designer.cs">
+      <DependentUpon>FrmVarSel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Unities\TData.cs" />
+    <Compile Include="VarShow\FrmVarShow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VarShow\FrmVarShow.Designer.cs">
+      <DependentUpon>FrmVarShow.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AutoSel\FrmAutoCheck.resx">
+      <DependentUpon>FrmAutoCheck.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AutoSel\FrmAutoID.resx">
+      <DependentUpon>FrmAutoID.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AutoSel\FrmAutoSel.resx">
+      <DependentUpon>FrmAutoSel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmBodyDia.resx">
+      <DependentUpon>FrmBodyDia.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmCalib.resx">
+      <DependentUpon>FrmCalib.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmCL_Speed.resx">
+      <DependentUpon>FrmCL_Speed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmCrownDia.resx">
+      <DependentUpon>FrmCrownDia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmCrucTrv.resx">
+      <DependentUpon>FrmCrucTrv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmCrucTrvLim.resx">
+      <DependentUpon>FrmCrucTrvLim.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmCR_Speed.resx">
+      <DependentUpon>FrmCR_Speed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmDiaCalib.resx">
+      <DependentUpon>FrmDiaCalib.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmFurnaceNum.resx">
+      <DependentUpon>FrmFurnaceNum.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmHtrTempClib.resx">
+      <DependentUpon>FrmHtrTempClib.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmIsoAtm.resx">
+      <DependentUpon>FrmIsoAtm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmMeltGapClib.resx">
+      <DependentUpon>FrmMeltGapClib.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmMultiSegment.resx">
+      <DependentUpon>FrmMultiSegment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmNeckDia.resx">
+      <DependentUpon>FrmNeckDia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmPulloutWeig.resx">
+      <DependentUpon>FrmPulloutWeig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmSeedTrv.resx">
+      <DependentUpon>FrmSeedTrv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmSeedTrvLim.resx">
+      <DependentUpon>FrmSeedTrvLim.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmShieldTrv.resx">
+      <DependentUpon>FrmShieldTrv.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmShieldTrvLim.resx">
+      <DependentUpon>FrmShieldTrvLim.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmSL_Speed.resx">
+      <DependentUpon>FrmSL_Speed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmSR_Speed.resx">
+      <DependentUpon>FrmSR_Speed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmTotalGas.resx">
+      <DependentUpon>FrmTotalGas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmTotalLen.resx">
+      <DependentUpon>FrmTotalLen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmTotalPower.resx">
+      <DependentUpon>FrmTotalPower.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmWeightCalib.resx">
+      <DependentUpon>FrmWeightCalib.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmWeightGap.resx">
+      <DependentUpon>FrmWeightGap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmWeightTune.resx">
+      <DependentUpon>FrmWeightTune.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\CCD\FrmBodyArea.resx">
+      <DependentUpon>FrmBodyArea.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\CCD\FrmBrightArea.resx">
+      <DependentUpon>FrmBrightArea.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\CCD\FrmCam1Adjust.resx">
+      <DependentUpon>FrmCam1Adjust.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\CCD\FrmCam1SavePic.resx">
+      <DependentUpon>FrmCam1SavePic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\CCD\FrmCam2Adjust.resx">
+      <DependentUpon>FrmCam2Adjust.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\CCD\FrmCCD.resx">
+      <DependentUpon>FrmCCD.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\CCD\FrmBodyTemp.resx">
+      <DependentUpon>FrmBodyTemp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\CCD\FrmCrownArea.resx">
+      <DependentUpon>FrmCrownArea.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\CCD\FrmCrystalShake.resx">
+      <DependentUpon>FrmCrystalShake.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\CCD\FrmCutLineCheck.resx">
+      <DependentUpon>FrmCutLineCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\CCD\FrmHArea.resx">
+      <DependentUpon>FrmHArea.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\CCD\FrmImage.resx">
+      <DependentUpon>FrmImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\CCD\FrmMeltCheckArea.resx">
+      <DependentUpon>FrmMeltCheckArea.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\CCD\FrmMeltGapArea.resx">
+      <DependentUpon>FrmMeltGapArea.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\CCD\FrmMeltGapLArea.resx">
+      <DependentUpon>FrmMeltGapLArea.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\CCD\FrmNeckArea.resx">
+      <DependentUpon>FrmNeckArea.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\CCD\FrmPicSave.resx">
+      <DependentUpon>FrmPicSave.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\CCD\FrmReferenceLine.resx">
+      <DependentUpon>FrmReferenceLine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\CCD\FrmShieldMeasure.resx">
+      <DependentUpon>FrmShieldMeasure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmAuxFunc.resx">
+      <DependentUpon>FrmAuxFunc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmCrownT.resx">
+      <DependentUpon>FrmCrownT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmCruLockGraphUpDown.resx">
+      <DependentUpon>FrmCruLockGraphUpDown.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmDiaByWeight.resx">
+      <DependentUpon>FrmDiaByWeight.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmFTLockGraphRot.resx">
+      <DependentUpon>FrmFTLockGraphRot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmFTLockGraphUpDown.resx">
+      <DependentUpon>FrmFTLockGraphUpDown.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmFTPCAction.resx">
+      <DependentUpon>FrmFTPCAction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmHotEdite.resx">
+      <DependentUpon>FrmHotEdite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmHotHistory.resx">
+      <DependentUpon>FrmHotHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmHtrLockGraph.resx">
+      <DependentUpon>FrmHtrLockGraph.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmLockloopLockGraph.resx">
+      <DependentUpon>FrmLockloopLockGraph.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmManager.resx">
+      <DependentUpon>FrmManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmCameraPos.resx">
+      <DependentUpon>FrmCameraPos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\Calibration\FrmCameraTemp.resx">
+      <DependentUpon>FrmCameraTemp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmCalculator.resx">
+      <DependentUpon>FrmCalculator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmCrucCalc.resx">
+      <DependentUpon>FrmCrucCalc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmCrystalCalc.resx">
+      <DependentUpon>FrmCrystalCalc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmCtlSel.resx">
+      <DependentUpon>FrmCtlSel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmLogin.resx">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmPCLockGraphRot.resx">
+      <DependentUpon>FrmPCLockGraphRot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmPCLockGraphUpDown.resx">
+      <DependentUpon>FrmPCLockGraphUpDown.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmShieldLockGraphUpDown.resx">
+      <DependentUpon>FrmShieldLockGraphUpDown.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmHotZone.resx">
+      <DependentUpon>FrmHotZone.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmTimer.resx">
+      <DependentUpon>FrmTimer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmValveLockGraphOpenClose.resx">
+      <DependentUpon>FrmValveLockGraphOpenClose.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\FrmXTALLockGraph.resx">
+      <DependentUpon>FrmXTALLockGraph.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\License\FrmLicense.resx">
+      <DependentUpon>FrmLicense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\MainTain\FrmLimitSW.resx">
+      <DependentUpon>FrmLimitSW.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\MainTain\FrmMaintain.resx">
+      <DependentUpon>FrmMaintain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\MainTain\FrmMaintainLock.resx">
+      <DependentUpon>FrmMaintainLock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\MainTain\FrmPerFac.resx">
+      <DependentUpon>FrmPerFac.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AuxFunction\MainTain\FrmTempSW.resx">
+      <DependentUpon>FrmTempSW.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmAddWeight.resx">
+      <DependentUpon>FrmAddWeight.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmBakeout.resx">
+      <DependentUpon>FrmBakeout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmBody.resx">
+      <DependentUpon>FrmBody.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmCharging.resx">
+      <DependentUpon>FrmCharging.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmCLSL.resx">
+      <DependentUpon>FrmCLSL.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmCoverOut.resx">
+      <DependentUpon>FrmCoverOut.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmCoverRotIn.resx">
+      <DependentUpon>FrmCoverRotIn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmCoverRotOut.resx">
+      <DependentUpon>FrmCoverRotOut.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmCrown.resx">
+      <DependentUpon>FrmCrown.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmCrownTrack.resx">
+      <DependentUpon>FrmCrownTrack.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmCrucLift.resx">
+      <DependentUpon>FrmCrucLift.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmCrucLiftActived.resx">
+      <DependentUpon>FrmCrucLiftActived.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmCrucPos.resx">
+      <DependentUpon>FrmCrucPos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmCrucRot.resx">
+      <DependentUpon>FrmCrucRot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmCrucRotAcc.resx">
+      <DependentUpon>FrmCrucRotAcc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmCrysCold.resx">
+      <DependentUpon>FrmCrysCold.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmCrysCold1.resx">
+      <DependentUpon>FrmCrysCold1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmCrysCold2.resx">
+      <DependentUpon>FrmCrysCold2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmDiaCtl.resx">
+      <DependentUpon>FrmDiaCtl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmDiaRateCtl.resx">
+      <DependentUpon>FrmDiaRateCtl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmFastTail.resx">
+      <DependentUpon>FrmFastTail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmFeedConfirm.resx">
+      <DependentUpon>FrmFeedConfirm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmFeedManual.resx">
+      <DependentUpon>FrmFeedManual.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmFinishedTail.resx">
+      <DependentUpon>FrmFinishedTail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmGrowCtl.resx">
+      <DependentUpon>FrmGrowCtl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmGrowCtlTemp.resx">
+      <DependentUpon>FrmGrowCtlTemp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmHtrTemp.resx">
+      <DependentUpon>FrmHtrTemp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmHUIConfirmPopUp.resx">
+      <DependentUpon>FrmHUIConfirmPopUp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmIsolation.resx">
+      <DependentUpon>FrmIsolation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmLeakBack.resx">
+      <DependentUpon>FrmLeakBack.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmLevel.resx">
+      <DependentUpon>FrmLevel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmLostSmallWeightPopUp.resx">
+      <DependentUpon>FrmLostSmallWeightPopUp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmLostWeightPopUp.resx">
+      <DependentUpon>FrmLostWeightPopUp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmMain.resx">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmManual.resx">
+      <DependentUpon>FrmManual.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmManualNeck.resx">
+      <DependentUpon>FrmManualNeck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmMeltData.resx">
+      <DependentUpon>FrmMeltData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmMeltGap.resx">
+      <DependentUpon>FrmMeltGap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmMeltGapPopUp.resx">
+      <DependentUpon>FrmMeltGapPopUp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmMeltGapSafe.resx">
+      <DependentUpon>FrmMeltGapSafe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmMelting.resx">
+      <DependentUpon>FrmMelting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmMeltTemp.resx">
+      <DependentUpon>FrmMeltTemp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmMsgBox.resx">
+      <DependentUpon>FrmMsgBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmNeck.resx">
+      <DependentUpon>FrmNeck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmPopUp.resx">
+      <DependentUpon>FrmPopUp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmPowerCtl.resx">
+      <DependentUpon>FrmPowerCtl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmPowerRate.resx">
+      <DependentUpon>FrmPowerRate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmPressCtl.resx">
+      <DependentUpon>FrmPressCtl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmPressurization.resx">
+      <DependentUpon>FrmPressurization.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmPumpDown.resx">
+      <DependentUpon>FrmPumpDown.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmPurge.resx">
+      <DependentUpon>FrmPurge.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmSafeProtect.resx">
+      <DependentUpon>FrmSafeProtect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmSaveProtected.resx">
+      <DependentUpon>FrmSaveProtected.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmSeedLift.resx">
+      <DependentUpon>FrmSeedLift.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmSeedPullIn.resx">
+      <DependentUpon>FrmSeedPullIn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmSeedRot.resx">
+      <DependentUpon>FrmSeedRot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmSeedRotAcc.resx">
+      <DependentUpon>FrmSeedRotAcc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmShieldPos.resx">
+      <DependentUpon>FrmShieldPos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmShoulder.resx">
+      <DependentUpon>FrmShoulder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmShutDown.resx">
+      <DependentUpon>FrmShutDown.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmStabilizationDip.resx">
+      <DependentUpon>FrmStabilizationDip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmTail.resx">
+      <DependentUpon>FrmTail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmTempRate.resx">
+      <DependentUpon>FrmTempRate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmTubeIn.resx">
+      <DependentUpon>FrmTubeIn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmTubeOut.resx">
+      <DependentUpon>FrmTubeOut.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\FrmVarTable.resx">
+      <DependentUpon>FrmVarTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrystalCtl\KeyForm.resx">
+      <DependentUpon>KeyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GasVacuum\FrmGasVacuum.resx">
+      <DependentUpon>FrmGasVacuum.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GasVacuum\FrmVacumm.resx">
+      <DependentUpon>FrmVacumm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GrowRecord\FrmColorSel.resx">
+      <DependentUpon>FrmColorSel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GrowRecord\FrmGrowRecord.resx">
+      <DependentUpon>FrmGrowRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GrowRecord\FrmHistTrend.resx">
+      <DependentUpon>FrmHistTrend.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GrowRecord\FrmReport.resx">
+      <DependentUpon>FrmReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="SOP\FrmSaveFile.resx">
+      <DependentUpon>FrmSaveFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\FrmSelFile.resx">
+      <DependentUpon>FrmSelFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\FullKey.resx">
+      <DependentUpon>FullKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcSel.resx">
+      <DependentUpon>ProcSel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab1.resx">
+      <DependentUpon>ProcStab1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab10.resx">
+      <DependentUpon>ProcStab10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab11.resx">
+      <DependentUpon>ProcStab11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab12.resx">
+      <DependentUpon>ProcStab12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab13.resx">
+      <DependentUpon>ProcStab13.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab14.resx">
+      <DependentUpon>ProcStab14.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab15.resx">
+      <DependentUpon>ProcStab15.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab16.resx">
+      <DependentUpon>ProcStab16.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab17.resx">
+      <DependentUpon>ProcStab17.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab18.resx">
+      <DependentUpon>ProcStab18.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab19.resx">
+      <DependentUpon>ProcStab19.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab2.resx">
+      <DependentUpon>ProcStab2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab20.resx">
+      <DependentUpon>ProcStab20.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab21.resx">
+      <DependentUpon>ProcStab21.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab22.resx">
+      <DependentUpon>ProcStab22.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab23.resx">
+      <DependentUpon>ProcStab23.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab24.resx">
+      <DependentUpon>ProcStab24.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab3.resx">
+      <DependentUpon>ProcStab3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab4.resx">
+      <DependentUpon>ProcStab4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab5.resx">
+      <DependentUpon>ProcStab5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab6.resx">
+      <DependentUpon>ProcStab6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab7.resx">
+      <DependentUpon>ProcStab7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab8.resx">
+      <DependentUpon>ProcStab8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\ProcStab9.resx">
+      <DependentUpon>ProcStab9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SOP\SmallKey.resx">
+      <DependentUpon>SmallKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Trend\FrmChangeTime.resx">
+      <DependentUpon>FrmChangeTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Trend\FrmRealSel.resx">
+      <DependentUpon>FrmRealSel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Trend\FrmTrend.resx">
+      <DependentUpon>FrmTrend.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Trend\FrmVarSel.resx">
+      <DependentUpon>FrmVarSel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VarShow\FrmVarShow.resx">
+      <DependentUpon>FrmVarShow.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6 %28x86 和 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CrystalGrowth.ico" />
+    <Content Include="DLL\Basler.Pylon.dll" />
+    <Content Include="DLL\CamLibrary.dll" />
+    <Content Include="DLL\CLIDelegate.dll" />
+    <Content Include="DLL\MvCameraControl.Net.dll" />
+    <Content Include="DLL\Newtonsoft.Json.dll" />
+    <Content Include="DLL\NPOI.dll" />
+    <Content Include="DLL\S7.Net.dll" />
+    <Content Include="DLL\System.Data.SQLite.dll" />
+    <Content Include="DLL\ThridLibray.dll" />
+    <Content Include="DLL\VimbaNET.dll" />
+    <Content Include="log4net.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,435 @@
+﻿using CrystalGrowth.CrystalCtl;
+using CrystalGrowth.SOP;
+using CrystalGrowth.Unities;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Text;
+using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
+
+namespace CrystalGrowth.Trend
+{
+    internal partial class FrmTrend : Form
+    {
+        public int MaxSpan = 6000;
+        readonly SelValue[] RealList = new SelValue[5];
+        readonly double MaxNum = 0;
+        float LastValue = 100;
+        int TimeCnt = 0;
+        bool StopFlag = false;
+        private FrmTrend()
+        {
+            InitializeComponent();
+            DataGridView1.Rows.Add(5);
+            ChartAddSeries(chart1);
+            MaxNum = MaxSpan * 60 / 5;
+        }
+        FrmChangeTime fct;
+        FrmVarSel fvs;
+        FrmRealSel frs;
+        public static FrmTrend Single;
+        public static FrmTrend CreateInstrance()
+        {
+            if (Single == null)
+            {
+                Single = new FrmTrend();
+                Single.FormClosed += Single_FormClosed;
+            }
+            return Single;
+        }
+        static void Single_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Single = null;
+        }
+        public void ChartAddSeries(Chart chart)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                chart.Series.Add(new Series($"Series{i}")
+                {
+                    ChartType = SeriesChartType.FastLine, //直线
+                    BorderWidth = 1,
+                    XValueType = ChartValueType.Time,
+                    IsValueShownAsLabel = false
+                });
+            }
+            chart.Series[0].Color = Color.Red;
+            chart.Series[1].Color = Color.Green;
+            chart.Series[2].Color = Color.Blue;
+            chart.Series[3].Color = Color.Yellow;
+            chart.Series[4].Color = Color.Fuchsia;
+        }
+        public void BtnReset()
+        {
+            BtnTime.Visible = true;
+            BtnSave.Visible = true;
+            BtnClear.Visible = true;
+        }
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+            if (LastValue != PLC.ReadValue[1])
+            {
+                LastValue = PLC.ReadValue[1];
+                object[] LastStr = RecordLastValue();//记录上次dgv数据           
+                LoadVarData(Math.Round(LastValue, 1).ToString("f1"));//根据切换状态，加载当前状态数据，到最后一条状态清空实时曲线。   
+                ContainsSameData(LastStr); //与上一道工序比较是否有相同的记录数据，有则接着显示,其他记录清空。
+            }
+            if (TimeCnt == 0 || TimeCnt > 5)
+            {
+                TimeCnt = 1;
+                AddRealData();//刷新表格显示数据
+                if (StopFlag == false)
+                {
+                    DateTime timeNow = DateTime.Now;
+                    TimeChange(chart1, timeNow.ToOADate(), timeNow.AddMinutes(-MaxSpan).ToOADate());
+                }
+            }
+            TimeCnt++;
+        }
+        private object[] RecordLastValue()
+        {
+            object[] LastStr = new object[5];
+            for (int i = 0; i < 5; i++)
+            {
+                if (DataGridView1.Rows[i].Cells[1].Value != null)
+                {
+                    LastStr[i] = DataGridView1.Rows[i].Cells[1].Value;
+                }
+            }
+            return LastStr;
+        }
+        private void LoadVarData(string state)
+        {
+            string[] Lines = File.ReadAllLines(FileHelper.TVarSelPath, Encoding.UTF8);
+            int Length = Lines.Length;
+            char[] SplitChar = new char[] { ' ' };
+            string[] TempVar;
+            for (int i = 0; i < Length; i++)
+            {
+                TempVar = Lines[i].Split(SplitChar);
+                if (TempVar[0] == state)
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        RealList[j].Index = Convert.ToInt32(TempVar[j + 1]);
+                        if (RealList[j].Index > 0)
+                        {
+                            DataGridView1.Rows[j].Cells[1].Value = FrmVarTable.VarStr[RealList[j].Index];
+                            RealList[j].Name = DataGridView1.Rows[j].Cells[1].Value.ToString();
+                            RealList[j].Value = FrmVarTable.VarValue[RealList[j].Index];
+                            RealList[j].Min = TData.LimitValue[RealList[j].Name].Min;
+                            RealList[j].Max = TData.LimitValue[RealList[j].Name].Max;
+                            DataGridView1.Rows[j].Cells[2].Value = RealList[j].Value;
+                            DataGridView1.Rows[j].Cells[3].Value = RealList[j].Min;
+                            DataGridView1.Rows[j].Cells[4].Value = RealList[j].Max;
+                        }
+                        else
+                        {
+                            RealList[j].Index = 0;
+                            DataGridView1.Rows[j].Cells[1].Value = "";
+                            DataGridView1.Rows[j].Cells[2].Value = "";
+                            DataGridView1.Rows[j].Cells[3].Value = "";
+                            DataGridView1.Rows[j].Cells[4].Value = "";
+                        }
+                    }
+                    break;
+                }
+                if (i + 1 == Length)
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        ClearCurveInfo(j);
+                    }
+                }
+            }
+        }
+        private void ContainsSameData(object[] LastStr)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                if (LastStr[i] == null || DataGridView1.Rows[i].Cells[1].Value.ToString() == LastStr[i].ToString())
+                {
+                    continue;
+                }
+                else
+                {
+                    chart1.Series[i].Points.Clear();
+                    TData.CurvePt[i].X.Clear();
+                    TData.CurvePt[i].Y.Clear();
+                }
+            }
+        }
+        private void AddRealData()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                if (RealList[i].Index > 0)
+                {
+                    RealList[i].Value = FrmVarTable.VarValue[RealList[i].Index];
+                    if (DataCovert.Juage(RealList[i].Value))
+                    {
+                        double odaTime = DateTime.Now.ToOADate();
+                        if (StopFlag == false)
+                        {
+                            DataGridView1.Rows[i].Cells[2].Value = RealList[i].Value;
+                            chart1.Series[i].Points.AddXY(odaTime, DataCovert.NumVar(RealList[i].Value, RealList[i].Min, RealList[i].Max));
+                            if (chart1.Series[i].Points.Count > MaxNum) { chart1.Series[i].Points.RemoveAt(0); }
+                        }
+                        TData.CurvePt[i].X.Add(odaTime);
+                        TData.CurvePt[i].Y.Add(Convert.ToDouble(RealList[i].Value));
+                        if (TData.CurvePt[i].X.Count >= MaxNum)
+                        {
+                            TData.CurvePt[i].X.RemoveAt(0);
+                            TData.CurvePt[i].Y.RemoveAt(0);
+                        }
+                    }
+                }
+                else
+                {
+                    DataGridView1.Rows[i].Cells[2].Value = "";
+                    DataGridView1.Rows[i].Cells[3].Value = "";
+                    DataGridView1.Rows[i].Cells[4].Value = "";
+                }
+            }
+        }
+        public void TimeChange(Chart chart, double min, double max)
+        {
+            chart.ChartAreas[0].AxisX.Minimum = max;
+            chart.ChartAreas[0].AxisX.Maximum = min;
+            DateTime dt = DateTime.Now;
+            double tSpan = dt.ToOADate() - dt.AddMinutes(-FrmChangeTime.SpanRealTime).ToOADate();
+            chart.ChartAreas[0].AxisX.MajorGrid.Interval = tSpan / 24;
+            chart.ChartAreas[0].AxisX.LabelStyle.Interval = tSpan / 12;
+            chart.ChartAreas[0].AxisX.LabelStyle.IntervalOffset = tSpan / 24;
+            chart.ChartAreas[0].AxisX.ScaleView.Size = tSpan;
+            chart.ChartAreas[0].AxisX.ScaleView.Scroll(ScrollType.Last);
+            chart.ChartAreas[0].AxisX.ScaleView.SmallScrollMinSize = tSpan / 24;
+        }
+        public void WriteLimitValue(string Value, int RowNum, int ColumnNum)
+        {
+            if (string.IsNullOrEmpty(Value) || RowNum < 0) return;
+            switch (ColumnNum)
+            {
+                case 3:
+                    TData.LimitValue[RealList[RowNum].Name].Min = Value;
+                    RealList[RowNum].Min = Value;
+                    break;
+                case 4:
+                    TData.LimitValue[RealList[RowNum].Name].Max = Value;
+                    RealList[RowNum].Max = Value;
+                    break;
+            }
+            TData.SaveLimitValue();
+            chart1.Series[RowNum].Points.Clear();
+            List<double> yScale = new List<double>();
+            foreach (double pointY in TData.CurvePt[RowNum].Y)
+            {
+                yScale.Add(DataCovert.NumVar(pointY, RealList[RowNum].Min, RealList[RowNum].Max));
+            }
+            chart1.Series[RowNum].Points.DataBindXY(TData.CurvePt[RowNum].X, yScale);
+        }
+        private void SaveVarFile()
+        {
+            string[] Lines = File.ReadAllLines(FileHelper.TVarSelPath, Encoding.UTF8);
+            int Length = Lines.Length;
+            string TempVar;
+            char[] SplitChar = new char[] { ' ' };
+            for (int i = 0; i < Length; i++)
+            {
+                TempVar = Lines[i].Split(SplitChar)[0];
+                if (TempVar == Math.Round(PLC.ReadValue[1], 1).ToString("f1"))
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        TempVar = string.Concat(TempVar, " ", RealList[j].Index);
+                    }
+                    Lines[i] = TempVar;
+                    break;
+                }
+            }
+            File.WriteAllLines(FileHelper.TVarSelPath, Lines);
+        }
+        private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (DataGridView1.CurrentCell != null)
+            {
+                if (e.ColumnIndex == 3 || e.ColumnIndex == 4)
+                {
+                    SmallKey sk = new SmallKey();
+                    sk.ImportData(DataGridView1.CurrentCell, new Point(768, 200), 1);
+                    sk.ShowDialog();
+                    if (sk.DialogResult == DialogResult.OK)
+                    {
+                        WriteLimitValue(DataGridView1.CurrentCell.Value.ToString(), e.RowIndex, e.ColumnIndex);
+                    }
+                }
+            }
+        }
+        private void BtnVarSel_Click(object sender, EventArgs e)
+        {
+            BtnTime.Visible = false;
+            BtnSave.Visible = false;
+            BtnClear.Visible = false;
+            fvs = new FrmVarSel();
+            FrmSwitch.Open(fvs, 66, new Point(600, 200), new Size(337, 550));
+            fvs.Show();
+        }
+        private void BtnTime_Click(object sender, EventArgs e)
+        {
+            fct = new FrmChangeTime();
+            FrmSwitch.Open(fct, 67, new Point(0, 130), new Size(1366, 254));
+            fct.Show();
+        }
+        private void BtnClear_Click(object sender, EventArgs e)
+        {
+            if (DouClick.ThreeSec(ref BtnClear))
+            {
+                chart1.Series.Clear();
+                ChartAddSeries(chart1);
+                for (int i = 0; i < 5; i++)
+                {
+                    ClearCurveInfo(i);
+                }
+            }
+        }
+        public void ClearCurveInfo(int index)
+        {
+            DataGridView1.Rows[index].Cells[1].Value = "";
+            DataGridView1.Rows[index].Cells[2].Value = "";
+            DataGridView1.Rows[index].Cells[3].Value = "";
+            DataGridView1.Rows[index].Cells[4].Value = "";
+            RealList[index].Index = 0;
+            TData.CurvePt[index].X.Clear();
+            TData.CurvePt[index].Y.Clear();
+        }
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            if (DouClick.ThreeSec(ref BtnSave))
+            {
+                SaveVarFile();
+                TData.SaveLimitValue();
+            }
+        }
+        private void CBGrid_Click(object sender, EventArgs e)
+        {
+            if (CBGrid.Checked)
+            {
+                CBGrid.Checked = false;
+                chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+                chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+            }
+            else
+            {
+                CBGrid.Checked = true;
+                chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = true;
+                chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = true;
+            }
+        }
+        private void FrmTrend_VisibleChanged(object sender, EventArgs e)
+        {
+            if (Visible == false)
+            {
+                if (fct != null) { fct.Close(); }
+                if (fvs != null) { fvs.Close(); }
+                if (frs != null) { frs.Close(); }
+                if (BtnStop.BackColor == Color.Red) { StopChange(); }
+            }
+        }
+        public void VarAdd(object obj)
+        {
+            int VarExist = 0;
+            for (int i = 0; i < 5; i++)
+            {
+                if (DataGridView1.Rows[i].Cells[1].Value.ToString() == obj.ToString())
+                {
+                    VarExist = 1;
+                    ClearCurveInfo(i);
+                }
+            }
+            if (VarExist == 0)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    if (DataGridView1.Rows[i].Cells[1].Value.ToString().Length == 0)
+                    {
+                        RealList[i].Name = obj.ToString();
+                        RealList[i].Index = Convert.ToInt32(TData.Paras[RealList[i].Name].Num);
+                        RealList[i].Value = FrmVarTable.VarValue[RealList[i].Index];
+                        RealList[i].Min = TData.LimitValue[RealList[i].Name].Min;
+                        RealList[i].Max = TData.LimitValue[RealList[i].Name].Max;
+                        DataGridView1.Rows[i].Cells[1].Value = RealList[i].Name;
+                        DataGridView1.Rows[i].Cells[2].Value = RealList[i].Value;
+                        DataGridView1.Rows[i].Cells[3].Value = RealList[i].Min;
+                        DataGridView1.Rows[i].Cells[4].Value = RealList[i].Max;
+                        break;
+                    }
+                }
+            }
+        }
+        public void InitData()
+        {
+            chart1.Series.Clear();
+            ChartAddSeries(chart1);
+            ChartSerieDataBind(0);
+            ChartSerieDataBind(1);
+            ChartSerieDataBind(2);
+            ChartSerieDataBind(3);
+            ChartSerieDataBind(4);
+        }
+        private void ChartSerieDataBind(int index)
+        {
+            if (RealList[index].Index != 0)
+            {
+                chart1.BeginInvoke(new Action(() =>
+                {
+                    List<double> yScale = new List<double>();
+                    foreach (double pointY in TData.CurvePt[index].Y)
+                    {
+                        yScale.Add(DataCovert.NumVar(pointY, RealList[index].Min, RealList[index].Max));
+                    }
+                    chart1.Series[index].Points.DataBindXY(TData.CurvePt[index].X, yScale);
+                }));
+            }
+        }
+        private void BtnStop_Click(object sender, EventArgs e)
+        {
+            StopChange();
+        }
+        private void StopChange()
+        {
+            if (StopFlag)
+            {
+                StopFlag = false;
+                BtnStop.Text = "启动";
+                BtnStop.BackColor = Color.RoyalBlue;
+                BtnTime.Enabled = true;
+                BtnSave.Enabled = true;
+                BtnClear.Enabled = true;
+                BtnVarSel.Enabled = true;
+                BtnHistory.Enabled = false;
+                DateTime timeNow = DateTime.Now;
+                TimeChange(chart1, timeNow.ToOADate(), timeNow.AddMinutes(-MaxSpan).ToOADate());
+                InitData();
+            }
+            else
+            {
+                StopFlag = true;
+                BtnStop.BackColor = Color.Red;
+                BtnStop.Text = "暂停";
+                BtnTime.Enabled = false;
+                BtnSave.Enabled = false;
+                BtnClear.Enabled = false;
+                BtnVarSel.Enabled = false;
+                BtnHistory.Enabled = true;
+            }
+        }
+        private void BtnHistory_Click(object sender, EventArgs e)
+        {
+            frs = new FrmRealSel();
+            FrmSwitch.Open(frs, 103, new Point(0, 130), new Size(1366, 254));
+            frs.Show();
+        }
+    }
+}

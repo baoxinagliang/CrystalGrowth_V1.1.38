@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrystalGrowth", "CrystalGrowth\CrystalGrowth.csproj", "{33DB1627-476A-45A2-BB98-A3F02175EEE4}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{2D218999-5A42-4185-81BE-CF03A257C0F3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		CD_ROM|Any CPU = CD_ROM|Any CPU
+		CD_ROM|x64 = CD_ROM|x64
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		DVD-5|Any CPU = DVD-5|Any CPU
+		DVD-5|x64 = DVD-5|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		SingleImage|Any CPU = SingleImage|Any CPU
+		SingleImage|x64 = SingleImage|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{33DB1627-476A-45A2-BB98-A3F02175EEE4}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{33DB1627-476A-45A2-BB98-A3F02175EEE4}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{33DB1627-476A-45A2-BB98-A3F02175EEE4}.CD_ROM|x64.ActiveCfg = Release|x64
+		{33DB1627-476A-45A2-BB98-A3F02175EEE4}.CD_ROM|x64.Build.0 = Release|x64
+		{33DB1627-476A-45A2-BB98-A3F02175EEE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33DB1627-476A-45A2-BB98-A3F02175EEE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33DB1627-476A-45A2-BB98-A3F02175EEE4}.Debug|x64.ActiveCfg = Debug|x64
+		{33DB1627-476A-45A2-BB98-A3F02175EEE4}.Debug|x64.Build.0 = Debug|x64
+		{33DB1627-476A-45A2-BB98-A3F02175EEE4}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{33DB1627-476A-45A2-BB98-A3F02175EEE4}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{33DB1627-476A-45A2-BB98-A3F02175EEE4}.DVD-5|x64.ActiveCfg = Debug|x64
+		{33DB1627-476A-45A2-BB98-A3F02175EEE4}.DVD-5|x64.Build.0 = Debug|x64
+		{33DB1627-476A-45A2-BB98-A3F02175EEE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33DB1627-476A-45A2-BB98-A3F02175EEE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33DB1627-476A-45A2-BB98-A3F02175EEE4}.Release|x64.ActiveCfg = Release|x64
+		{33DB1627-476A-45A2-BB98-A3F02175EEE4}.Release|x64.Build.0 = Release|x64
+		{33DB1627-476A-45A2-BB98-A3F02175EEE4}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{33DB1627-476A-45A2-BB98-A3F02175EEE4}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{33DB1627-476A-45A2-BB98-A3F02175EEE4}.SingleImage|x64.ActiveCfg = Release|x64
+		{33DB1627-476A-45A2-BB98-A3F02175EEE4}.SingleImage|x64.Build.0 = Release|x64
+		{2D218999-5A42-4185-81BE-CF03A257C0F3}.CD_ROM|Any CPU.ActiveCfg = Debug
+		{2D218999-5A42-4185-81BE-CF03A257C0F3}.CD_ROM|x64.ActiveCfg = Debug
+		{2D218999-5A42-4185-81BE-CF03A257C0F3}.Debug|Any CPU.ActiveCfg = Debug
+		{2D218999-5A42-4185-81BE-CF03A257C0F3}.Debug|x64.ActiveCfg = Debug
+		{2D218999-5A42-4185-81BE-CF03A257C0F3}.DVD-5|Any CPU.ActiveCfg = Debug
+		{2D218999-5A42-4185-81BE-CF03A257C0F3}.DVD-5|x64.ActiveCfg = Debug
+		{2D218999-5A42-4185-81BE-CF03A257C0F3}.Release|Any CPU.ActiveCfg = Release
+		{2D218999-5A42-4185-81BE-CF03A257C0F3}.Release|x64.ActiveCfg = Release
+		{2D218999-5A42-4185-81BE-CF03A257C0F3}.SingleImage|Any CPU.ActiveCfg = Debug
+		{2D218999-5A42-4185-81BE-CF03A257C0F3}.SingleImage|x64.ActiveCfg = Debug
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DDAD0705-93CC-4667-B874-50D129A1B7F3}
+	EndGlobalSection
+EndGlobal

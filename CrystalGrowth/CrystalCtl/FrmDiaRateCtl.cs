@@ -1,0 +1,289 @@
+﻿using CrystalGrowth.AuxFunction.License;
+using CrystalGrowth.Unities;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace CrystalGrowth.CrystalCtl
+{
+    internal partial class FrmDiaRateCtl : Form
+    {
+        public FrmDiaRateCtl()
+        {
+            InitializeComponent();
+            Load += Timer1_Tick;
+        }
+        private void FrmDiaCtl_Load(object sender, EventArgs e)
+        {
+            BtnTune.BackColor = Color.Fuchsia;
+            BtnAuto.Visible = false;
+            BtnFixed.Visible = false;
+            GBSeedLift.Visible = false;
+            //BtnRateAuto.Visible = false;
+            //BtnRateFixed.Visible = false;
+            //GBRateSv.Visible = false;
+        }
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+            if (PLC.Count == 2)
+            {
+                LabPV.Text = Math.Round(PLC.ReadValue[119], 2).ToString("f2");
+                LabSP.Text = Math.Round(PLC.ReadValue[118], 2).ToString("f2");
+                LabOut.Text = Math.Round(PLC.ReadValue[3], 1).ToString("f1");
+                if (BtnTune.BackColor == Color.Fuchsia)
+                {
+                    LabGainVal.Text = Math.Round(PLC.ReadValue[120], 4).ToString("f4");
+                    LabDifferVal.Text = Math.Round(PLC.ReadValue[122], 4).ToString("f4");
+                    LabIntegVal.Text = Math.Round(PLC.ReadValue[121], 4).ToString("f4");
+                }
+                if (BtnLimit.BackColor == Color.Fuchsia)
+                {
+                    LabIntegVal.Text = Math.Round(PLC.ReadValue[4], 1).ToString("f1");
+                    LabDifferVal.Text = Math.Round(PLC.ReadValue[5], 1).ToString("f1");
+                }
+                if (PLC.ReadStatus[100] == 1)
+                {
+                    BtnON.BackColor = Color.Red;
+                    BtnOFF.BackColor = Color.Blue;
+                    LabOut.BackColor = PLC.ReadValue[1] == 11 ? Color.White : Color.Gray;
+                }
+                else
+                {
+                    BtnON.BackColor = Color.Blue;
+                    BtnOFF.BackColor = Color.Red;
+                    LabOut.BackColor = Color.White;
+                }        
+                if (PLC.ReadStatus[94] == 1)
+                {
+                    BtnFixed.BackColor = Color.Red;
+                    BtnAuto.BackColor = Color.Blue;
+                }
+                else
+                {
+                    BtnFixed.BackColor = Color.Blue;
+                    BtnAuto.BackColor = Color.Red;
+                }
+                if (PLC.ReadStatus[101] == 1)
+                {
+                    BtnRateFixed.BackColor = Color.Red;
+                    BtnRateAuto.BackColor = Color.Blue;
+                }
+                else
+                {
+                    BtnRateFixed.BackColor = Color.Blue;
+                    BtnRateAuto.BackColor = Color.Red;
+                }
+                if (PLC.ReadStatus[102] == 1)
+                {
+                    BtnPidFixed.BackColor = Color.Red;
+                    BtnPidAuto.BackColor = Color.Blue;
+                }
+                else
+                {
+                    BtnPidFixed.BackColor = Color.Blue;
+                    BtnPidAuto.BackColor = Color.Red;
+                }
+                if (PLC.ReadValue[1] == 11)
+                {
+                    GBSeedLift.Visible = true;
+                    BtnAuto.Visible = true;
+                    BtnFixed.Visible = true;
+                }
+                else
+                {
+                    GBSeedLift.Visible = false;
+                    BtnAuto.Visible = false;
+                    BtnFixed.Visible = false;
+                }
+            }
+        }
+        private void BtnTune_Click(object sender, EventArgs e)
+        {
+            BtnTune.BackColor = Color.Fuchsia;
+            BtnLimit.BackColor = Color.Blue;
+            LabGainTxt.Visible = true;
+            LabGainVal.Visible = true;
+            LabDifferTxt.Text = "微分";
+            LabIntegTxt.Text = "积分";
+            LabGainVal.Text = Math.Round(PLC.ReadValue[120], 4).ToString("f4");
+            LabDifferVal.Text = Math.Round(PLC.ReadValue[122], 4).ToString("f4");
+            LabIntegVal.Text = Math.Round(PLC.ReadValue[121], 4).ToString("f4");
+        }
+        private void BtnLimit_Click(object sender, EventArgs e)
+        {
+            BtnTune.BackColor = Color.Blue;
+            BtnLimit.BackColor = Color.Fuchsia;
+            LabGainTxt.Visible = false;
+            LabGainVal.Visible = false;
+            LabDifferTxt.Text = "下限";
+            LabIntegTxt.Text = "上限";
+            LabIntegVal.Text = Math.Round(PLC.ReadValue[4], 1).ToString("f1");
+            LabDifferVal.Text = Math.Round(PLC.ReadValue[5], 1).ToString("f1");
+        }
+        private void LabSP_Click(object sender, EventArgs e)
+        {
+            KeyForm kf = new KeyForm();
+            kf.ImportData(ref LabSP, 0, 1000);
+            kf.ShowDialog();
+            if (kf.DialogResult == DialogResult.OK)
+            {
+                PLC.SendFloat(33, 468, Convert.ToSingle(LabSP.Text));
+                Record.WriteIn("直径斜率设定", LabSP.Text, "Yellow");
+            }
+        }
+        private void LabOut_Click(object sender, EventArgs e)
+        {
+            if (LabOut.BackColor == Color.White)
+            {
+                KeyForm kf = new KeyForm();
+                kf.ImportData(ref LabOut, 0, 580);
+                kf.ShowDialog();
+                if (kf.DialogResult == DialogResult.OK)
+                {
+                    PLC.SendFloat(33, 4, Convert.ToSingle(LabOut.Text));
+                    if (PLC.ReadStatus[13] == 1)
+                    {
+                        Record.WriteIn("晶升速度设定", LabOut.Text, "Yellow");
+                    }
+                }
+            }
+        }
+        private void LabGainVal_Click(object sender, EventArgs e)
+        {
+            if (LabGainVal.BackColor == Color.White)
+            {
+                KeyForm kf = new KeyForm();
+                kf.ImportData(ref LabGainVal, 0, 200);
+                kf.ShowDialog();
+                if (kf.DialogResult == DialogResult.OK)
+                {
+                    PLC.SendFloat(33, 476, Convert.ToSingle(LabGainVal.Text));
+                    Record.WriteIn("直径斜率增益", LabGainVal.Text, "Yellow");
+                }
+            }
+        }
+        private void LabDifferVal_Click(object sender, EventArgs e)
+        {
+            if (LabDifferVal.BackColor == Color.White)
+            {
+                KeyForm kf = new KeyForm();
+                if (BtnTune.BackColor == Color.Fuchsia)
+                {
+                    kf.ImportData(ref LabDifferVal, 0, 100);
+                }
+                if (BtnLimit.BackColor == Color.Fuchsia)
+                {
+                    kf.ImportData(ref LabDifferVal, 0, 508);
+                }
+                kf.ShowDialog();
+                if (kf.DialogResult == DialogResult.OK)
+                {
+                    if (BtnTune.BackColor == Color.Fuchsia)
+                    {
+                        PLC.SendFloat(33, 484, Convert.ToSingle(LabDifferVal.Text));
+                        Record.WriteIn("直径斜率微分", LabDifferVal.Text, "Yellow");
+                    }
+                    if (BtnLimit.BackColor == Color.Fuchsia)
+                    {
+                        PLC.SendFloat(33, 16, Convert.ToSingle(LabDifferVal.Text));
+                        Record.WriteIn("直径斜率下限", LabDifferVal.Text, "Yellow");
+                    }
+                }
+            }
+        }
+        private void LabIntegVal_Click(object sender, EventArgs e)
+        {
+            if (LabIntegVal.BackColor == Color.White)
+            {
+                KeyForm kf = new KeyForm();
+                if (BtnTune.BackColor == Color.Fuchsia)
+                {
+                    kf.ImportData(ref LabIntegVal, 0, 100);
+                }
+                if (BtnLimit.BackColor == Color.Fuchsia)
+                {
+                    kf.ImportData(ref LabIntegVal, 0, 508);
+                }
+                kf.ShowDialog();
+                if (kf.DialogResult == DialogResult.OK)
+                {
+                    if (BtnTune.BackColor == Color.Fuchsia)
+                    {
+                        PLC.SendFloat(33, 480, Convert.ToSingle(LabIntegVal.Text));
+                        Record.WriteIn("直径斜率积分", LabIntegVal.Text, "Yellow");
+                    }
+                    if (BtnLimit.BackColor == Color.Fuchsia)
+                    {
+                        PLC.SendFloat(33, 12, Convert.ToSingle(LabIntegVal.Text));
+                        Record.WriteIn("直径斜率上限", LabIntegVal.Text, "Yellow");
+                    }
+                }
+            }
+        }
+        private void BtnON_Click(object sender, EventArgs e)
+        {
+            if (PLC.ReadStatus[100] == 0 && License.IsSystemCanRun())
+            {
+                PLC.SendBit(30, 168, 1);
+                Record.WriteIn("直径斜率控制", "ON", "Yellow");
+                BtnON.BackColor = Color.Red;
+                BtnOFF.BackColor = Color.Blue;
+                LabOut.BackColor = Color.Gray;
+            }
+        }
+        private void BtnOFF_Click(object sender, EventArgs e)
+        {
+            if (PLC.ReadStatus[100] == 1)
+            {
+                PLC.SendBit(30, 169, 1);
+                Record.WriteIn("直径斜率控制", "OFF", "Yellow");
+                BtnON.BackColor = Color.Blue;
+                BtnOFF.BackColor = Color.Red;
+                LabOut.BackColor = Color.White;
+                
+            }
+        }
+        private void BtnAuto_Click(object sender, EventArgs e)
+        {
+            PLC.SendBit(30, 160, 1);
+            Record.WriteIn("直径斜率控制-基础拉速自动", "ON", "Yellow");
+            BtnAuto.BackColor = Color.Red;
+            BtnFixed.BackColor = Color.Blue;
+        }
+        private void BtnFixed_Click(object sender, EventArgs e)
+        {
+            PLC.SendBit(30, 161, 1);
+            Record.WriteIn("直径斜率控制-基础拉速固定值", "ON", "Yellow");
+            BtnAuto.BackColor = Color.Blue;
+            BtnFixed.BackColor = Color.Red;
+        }
+        private void BtnRateAuto_Click(object sender, EventArgs e)
+        {
+            PLC.SendBit(30, 170, 1);
+            Record.WriteIn("直径斜率控制-斜率设定自动", "ON", "Yellow");
+            BtnRateAuto.BackColor = Color.Red;
+            BtnRateFixed.BackColor = Color.Blue;
+        }
+        private void BtnRateFixed_Click(object sender, EventArgs e)
+        {
+            PLC.SendBit(30, 171, 1);
+            Record.WriteIn("直径斜率控制-斜率设定固定值", "ON", "Yellow");
+            BtnRateAuto.BackColor = Color.Blue;
+            BtnRateFixed.BackColor = Color.Red;
+        }
+        private void BtnPidAuto_Click(object sender, EventArgs e)
+        {
+            PLC.SendBit(30, 172, 1);
+            Record.WriteIn("直径斜率控制-PID自动", "ON", "Yellow");
+            BtnPidAuto.BackColor = Color.Red;
+            BtnPidFixed.BackColor = Color.Blue;
+        }
+        private void BtnPidFixed_Click(object sender, EventArgs e)
+        {
+            PLC.SendBit(30, 173, 1);
+            Record.WriteIn("直径斜率控制-PID固定值", "ON", "Yellow");
+            BtnPidAuto.BackColor = Color.Blue;
+            BtnPidFixed.BackColor = Color.Red;
+        }
+    }
+}

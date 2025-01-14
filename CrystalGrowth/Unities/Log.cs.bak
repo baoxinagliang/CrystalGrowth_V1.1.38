@@ -1,0 +1,46 @@
+﻿using log4net;
+using System;
+using System.IO;
+
+namespace CrystalGrowth.Unities
+{
+    internal static class Log
+    {
+        static readonly ILog LogMsg = LogManager.GetLogger("Info");
+        public static void Record(string msg)
+        {
+            LogMsg.Debug(msg);
+        }
+        public static void Record(string msg, Exception ex)
+        {
+            LogMsg.Debug(msg, ex);
+        }
+        public static void Delete()
+        {
+            try
+            {
+                string[] files = Directory.GetFiles(string.Concat(Environment.CurrentDirectory, "\\Log\\"), "*.dat", SearchOption.AllDirectories);
+                foreach (string file in files)
+                {
+                    TimeSpan t = DateTime.Now - Convert.ToDateTime(string.Format(Path.GetFileNameWithoutExtension(file), "-01 00:00:00"));
+                    if (t.Days > 60)
+                    {
+                        File.Delete(file);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogMsg.Debug("删除日志文件失败!", ex);
+            }
+        }
+        public static void ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
+        {
+            LogMsg.Debug("异常", e.Exception);
+        }
+        public static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            LogMsg.Debug("异常", e.ExceptionObject as Exception);
+        }
+    }
+}
